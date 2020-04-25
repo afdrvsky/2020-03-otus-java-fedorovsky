@@ -4,12 +4,6 @@ import annotations.Test;
 
 public class Tester {
 
-    private String value = "initValue";
-    public Tester(String value) {
-        this.value = value;
-    }
-
-
     @Before
     public void beforeTest() {
         System.out.println("К тестированию готов!");

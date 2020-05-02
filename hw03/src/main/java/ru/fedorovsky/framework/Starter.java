@@ -1,6 +1,6 @@
-import annotations.After;
-import annotations.Before;
-import annotations.Test;
+package ru.fedorovsky.framework;
+
+import ru.fedorovsky.framework.annotations.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -9,17 +9,20 @@ import java.util.ArrayList;
 
 public class Starter {
 
-    public void starterTesting(String className) throws Exception {
-        int tests = 0;
-        int passed = 0;
+    ArrayList<Method> beforeMethod = new ArrayList<>();
+    ArrayList<Method> testMethods = new ArrayList<>();
+    ArrayList<Method> afterMethod = new ArrayList<>();
+    int tests = 0;
+    int passed = 0;
 
+    public void getClassByName(String className) throws Exception {
         Class<?> clazz = Class.forName(className);
+        getTests(clazz);
+    }
+
+    public void getTests(Class<?> clazz) throws Exception {
 
         Method[] t = clazz.getDeclaredMethods();
-
-        ArrayList<Method> beforeMethod = new ArrayList<>();
-        ArrayList<Method> testMethods = new ArrayList<>();
-        ArrayList<Method> afterMethod = new ArrayList<>();
 
         for (Method method : t) {
             Annotation[] annotations = method.getDeclaredAnnotations();
@@ -36,6 +39,10 @@ public class Starter {
                 }
             }
         }
+        testing(clazz);
+    }
+
+    private void testing(Class<?> clazz) throws Exception {
 
         for (Method testMethod : testMethods) {
             try {
@@ -54,12 +61,16 @@ public class Starter {
             } catch (InvocationTargetException wrappedExc) {
                 Throwable exc = wrappedExc.getCause();
                 System.out.println(testMethod + " failed: " + exc);
+                Object testInstance = clazz.getDeclaredConstructor().newInstance();
+                for (Method aftMtd : afterMethod) {
+                    aftMtd.invoke(testInstance);
+                }
             }
         }
-
         System.out.println("--------------------------------------------");
         System.out.println("Всего тестов: " + tests);
         System.out.println("Пройдено: " + passed);
         System.out.println("Провалились: " + (tests - passed));
     }
 }
+

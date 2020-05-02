@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group ''
+group 'ru.fedorovsky'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = JavaVersion.VERSION_13

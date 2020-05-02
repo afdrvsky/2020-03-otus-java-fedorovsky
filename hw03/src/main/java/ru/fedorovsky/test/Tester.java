@@ -1,6 +1,6 @@
-import annotations.After;
-import annotations.Before;
-import annotations.Test;
+package ru.fedorovsky.test;
+
+import ru.fedorovsky.framework.annotations.*;
 
 public class Tester {
 

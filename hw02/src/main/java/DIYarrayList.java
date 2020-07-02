@@ -3,6 +3,7 @@ import java.util.*;
 public class DIYarrayList<E> implements List<E> {
 
     private int defaultCapacity = 10;
+    private int stepToIncCapacity;
     private int size;
     private Object[] elementData;
 
@@ -14,9 +15,9 @@ public class DIYarrayList<E> implements List<E> {
         this.elementData = new Object[initialCapacity];
     }
 
-    public DIYarrayList(int initialCapacity, int stepToIncCapacity) {
+    public DIYarrayList(int initialCapacity, int defaultCapacity) {
         this.elementData = new Object[initialCapacity];
-        this.defaultCapacity = stepToIncCapacity;
+        this.stepToIncCapacity = defaultCapacity + 10;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class DIYarrayList<E> implements List<E> {
 
     private void checkAdequacyCapacity(int requiredCapacity) {
         if (requiredCapacity > elementData.length) {
-            elementData = Arrays.copyOf(elementData, requiredCapacity + defaultCapacity);
+            elementData = Arrays.copyOf(elementData, requiredCapacity + stepToIncCapacity);
         }
     }
 

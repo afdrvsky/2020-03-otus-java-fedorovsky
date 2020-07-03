@@ -2,22 +2,21 @@ import java.util.*;
 
 public class DIYarrayList<E> implements List<E> {
 
-    private int defaultCapacity = 10;
-    private int stepToIncCapacity;
+    private int stepToIncCapacity = 10;
     private int size;
     private Object[] elementData;
 
     public DIYarrayList() {
-        this.elementData = new Object[defaultCapacity];
+        this.elementData = new Object[stepToIncCapacity];
     }
 
     public DIYarrayList(int initialCapacity) {
         this.elementData = new Object[initialCapacity];
     }
 
-    public DIYarrayList(int initialCapacity, int defaultCapacity) {
+    public DIYarrayList(int initialCapacity, int stepToIncCapacity) {
         this.elementData = new Object[initialCapacity];
-        this.stepToIncCapacity = defaultCapacity + 10;
+        this.stepToIncCapacity = stepToIncCapacity;
     }
 
     @Override
